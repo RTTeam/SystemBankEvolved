@@ -45,7 +45,7 @@ public class Controller_basic {
                     String numbers = session.createQuery("select accountNum from AccountEntity where accountNum='"+received_account_num+"'")
                             .getSingleResult().toString();
 
-                    String words = session.createQuery("select accountPass from AccountEntity where accountPass='"+received_password+"'")
+                    String words = session.createQuery("select accountPass from AccountEntity where accountNum='"+received_account_num+"'")
                             .getSingleResult().toString();
 
 
