@@ -15,6 +15,7 @@ public class Controller_basic {
 
     public TextField login;
     public PasswordField password;
+    public static String logged_account_num;
 
 
     private String received_account_num;
@@ -65,6 +66,8 @@ public class Controller_basic {
                         }
 
                 if (received_account_num.equals(stored_acc_num) || received_password.equals(stored_password)){
+
+                            logged_account_num = stored_acc_num;
 
                         try{
                                     Parent root1 = FXMLLoader.load(getClass().getResource("../resources/MainPanel.fxml"));

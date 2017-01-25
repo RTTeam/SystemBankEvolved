@@ -53,12 +53,6 @@
     -fx-fill: #818181;
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
 }
-
-.label{
-    -fx-font-family: "Arial Black";
-
-}
-
 .menu-bar{
 
     -fx-background-color:
