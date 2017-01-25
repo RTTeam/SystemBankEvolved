@@ -116,5 +116,12 @@ public class Controller_basic {
         }
         session.getTransaction().commit();
         session.close();
+
+        Alert created= new Alert(Alert.AlertType.INFORMATION);
+        created.initModality(Modality.WINDOW_MODAL);
+        created.setHeaderText("Dodano 100 kont.");
+        created.setContentText("Na zasadzie 50xx / testxx. Enjoy.");
+        created.showAndWait();
+
     }
 }
