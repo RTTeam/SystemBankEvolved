@@ -1,0 +1,118 @@
+#panel{
+    -fx-background-image: url("/resources/background-small.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
+
+#LoginButton {
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 10 20 10 20;
+}
+
+
+#LoginButton:hover {
+    -fx-background-color: linear-gradient(#d0d0d0, #61a2b1);
+}
+
+#LogoutButton {
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 10 20 10 20;
+}
+
+
+#LogoutButton:hover {
+    -fx-background-color: linear-gradient(#d0d0d0, #61a2b1);
+}
+
+#welcome-text {
+    -fx-font-size: 32px;
+    -fx-text-alignment: center;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #818181;
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+}
+
+.label{
+    -fx-font-family: "Arial Black";
+
+}
+
+.menu-bar{
+
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-font-family: "Arial";
+    -fx-text-fill: black;
+
+
+}
+
+.menu .label{
+    -fx-text-fill: white;
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+}
+
+.context-menu{
+
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+
+}
+
+
+.pagination {
+    -fx-border-color:  #0E5D79;
+}
+
+.pagination .page {
+    -fx-background-color: #DDF1F8;
+}
+
+.pagination .pagination-control {
+    -fx-background-color: #C8C6C6;
+}
+
+.pagination .pagination-control .bullet-button {
+    -fx-background-color: transparent, #DDF1F8, #0E5D79, white, white;
+}
+
+.pagination .pagination-control .bullet-button:selected {
+    -fx-background-color: transparent, #DDF1F8, #0E5D79, white, #0E5D79;
+}
+
+.pagination .pagination-control .left-arrow, .right-arrow{
+    -fx-background-color: #DDF1F8, #0E5D79;
+}
+
+
+
