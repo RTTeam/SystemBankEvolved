@@ -16,4 +16,18 @@ public class Controller_MainPanel {
         stage.close();
     }
 
+    public void OnClickSendMoney(ActionEvent actionEvent) {
+    }
+
+    public void OnClickChangeFirstName(ActionEvent actionEvent) {
+    }
+
+    public void OnClickChangeSecondName(ActionEvent actionEvent) {
+    }
+
+    public void OnClickChangeEmail(ActionEvent actionEvent) {
+    }
+
+    public void OnClickChangeTelephoneNum(ActionEvent actionEvent) {
+    }
 }
