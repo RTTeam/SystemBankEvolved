@@ -153,7 +153,7 @@
                                                 <Insets right="80.0" top="5.0" />
                                              </VBox.margin>
                                           </TextField>
-                                          <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Wyślij">
+                                          <Button mnemonicParsing="false" onAction="#OnClickSendMoney" prefHeight="26.0" prefWidth="110.0" text="Wyślij">
                                              <VBox.margin>
                                                 <Insets left="80.0" top="10.0" />
                                              </VBox.margin>
@@ -279,22 +279,22 @@
                                     </VBox>
                                     <VBox prefHeight="487.0" prefWidth="177.0">
                                        <children>
-                                          <Button mnemonicParsing="false" text="Zmień">
+                                          <Button mnemonicParsing="false" onAction="#OnClickChangeFirstName" text="Zmień">
                                              <VBox.margin>
                                                 <Insets left="20.0" top="12.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" text="Zmień">
+                                          <Button mnemonicParsing="false" onAction="#OnClickChangeSecondName" text="Zmień">
                                              <VBox.margin>
                                                 <Insets left="20.0" top="7.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" text="Zmień">
+                                          <Button mnemonicParsing="false" onAction="#OnClickChangeEmail" text="Zmień">
                                              <VBox.margin>
                                                 <Insets left="20.0" top="8.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" text="Zmień">
+                                          <Button mnemonicParsing="false" onAction="#OnClickChangeTelephoneNum" text="Zmień">
                                              <VBox.margin>
                                                 <Insets left="20.0" top="8.0" />
                                              </VBox.margin>
