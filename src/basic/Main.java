@@ -19,6 +19,7 @@ import javax.persistence.metamodel.EntityType;
 public class Main extends Application {
 
     public static  SessionFactory ourSessionFactory;
+    public static Stage okno_login;
 
     static {
         try {
@@ -40,6 +41,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../resources/Login.fxml"));
+        okno_login = primaryStage;
         primaryStage.setTitle("KuBank");
         primaryStage.setScene(new Scene(root, 373  , 244));
 

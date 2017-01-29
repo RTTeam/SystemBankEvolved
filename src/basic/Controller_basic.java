@@ -112,7 +112,9 @@ public class Controller_basic {
     }
 
     public void CloseButton(ActionEvent actionEvent) {
-
+        Main okno_login = new Main();
+        okno_login.okno_login.close();
+        System.exit(0);
     }
 
     public static String sha256(String base) {
