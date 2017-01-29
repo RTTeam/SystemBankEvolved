@@ -17,10 +17,10 @@ public class AccountEntity {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy="increment")
-    private Long id;
+    private Integer id;
 
     @Column(name="account_num")
-    private String accountNum;
+    private Integer accountNum;
 
     @Column(name="account_password")
     private String accountPass;
@@ -34,10 +34,6 @@ public class AccountEntity {
     @Column(name="acc_exp_date")
     private String accountExpDate;
 
-    @Column(name="acc_owner_id")
-    private String accountOwnerId;
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,30 +41,17 @@ public class AccountEntity {
 
         AccountEntity that = (AccountEntity) o;
 
-       if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
 
-       return true; }
+        return true; }
 
-   @Override
-   public int hashCode() {
-       return id != null ? id.hashCode() : 0;
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public String getAccountNum() {
-        return accountNum;
-    }
-
-    public void setAccountNum(String accountNum) {
-        this.accountNum = accountNum;
-    }
 
     public String getAccountPass() {
         return accountPass;
@@ -96,20 +79,27 @@ public class AccountEntity {
         this.accountExpDate = accountExpDate;
     }
 
-
-    public String getAccountOwnerId() {
-        return accountOwnerId;
-    }
-
-    public void setAccountOwnerId(String accountOwnerId) {
-        this.accountOwnerId = accountOwnerId;
-    }
-
     public Integer getMoneyValue() {
         return moneyValue;
     }
 
     public void setMoneyValue(Integer moneyValue) {
         this.moneyValue = moneyValue;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(Integer accountNum) {
+        this.accountNum = accountNum;
     }
 }

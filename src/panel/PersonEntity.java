@@ -19,10 +19,7 @@ public class PersonEntity {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy="increment")
-    private Long id;
-
-    @Column(name="person_id")
-    private String personID;
+    private Integer id;
 
     @Column(name="first_name")
     private String firstName;
@@ -40,13 +37,7 @@ public class PersonEntity {
     private Integer clientAge;
 
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -89,11 +80,11 @@ public class PersonEntity {
         this.clientAge = clientAge;
     }
 
-    public String getPersonID() {
-        return personID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPersonID(String personID) {
-        this.personID = personID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

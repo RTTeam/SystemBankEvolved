@@ -28,8 +28,7 @@ public class Main extends Application {
             ourSessionFactory = configuration.buildSessionFactory();
         } catch (Exception ex) {
             //throw new ExceptionInInitializerError(ex);
-            System.out.println("Problem creating session factory");
-            //ex.printStackTrace();
+            ex.printStackTrace();
         }
     }
 
@@ -49,23 +48,12 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
 
-        final Session session = getSession();
-        try {
-            System.out.println("querying all the managed entities...");
-            final Metamodel metamodel = session.getSessionFactory().getMetamodel();
-            for (EntityType<?> entityType : metamodel.getEntities()) {
-                final String entityName = entityType.getName();
-                final Query query = session.createQuery("from " + entityName);
-                System.out.println("Executing: " + query.getQueryString());
-                for (Object o : query.list()) {
-                    System.out.println("  " + o);
-                }
-            }
-        } finally {
-            session.close();
-        }
-    }
 
+    }
+    @Override
+    public void stop(){
+                System.exit(0);
+            }
     public static void main(String[] args) {
         launch(args);
     }

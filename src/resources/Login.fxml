@@ -35,8 +35,8 @@
                       </Menu>
                       <Menu mnemonicParsing="false" text="Pomoc">
                         <items>
-                          <MenuItem mnemonicParsing="false" text="O programie" />
-                              <MenuItem mnemonicParsing="false" text="Pomoc techniczna" />
+                           <MenuItem fx:id="programInfo" mnemonicParsing="false" onAction="#ProgramInfo" text="O programie" />
+                           <MenuItem fx:id="techHelp" mnemonicParsing="false" onAction="#TechHelp" text="Pomoc techniczna" />
                               <MenuItem mnemonicParsing="false" onAction="#OnClickDevelop" text="Developer Mode" />
                         </items>
                       </Menu>
