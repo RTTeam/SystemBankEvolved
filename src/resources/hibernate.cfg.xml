@@ -15,5 +15,6 @@
         <property name="hbm2ddl.auto">create-drop</property>
 
         <mapping class="basic.AccountEntity"/>
+        <mapping class="panel.PersonEntity"/>
     </session-factory>
 </hibernate-configuration>

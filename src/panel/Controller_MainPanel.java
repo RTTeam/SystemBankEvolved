@@ -1,12 +1,21 @@
 package panel;
 
 
+import basic.AccountEntity;
+import basic.Controller_basic;
+import basic.Main;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
+import org.hibernate.Session;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -20,7 +29,8 @@ public class Controller_MainPanel {
     public Label clientEmailLabel;
     public Label clientTelephoneLabel;
     public Label clientAgeLabel;
-
+    public TableView historyTableView;
+    public Label saldoValueLabel;
 
     public void OnClickLogout(ActionEvent actionEvent) {
         final Node source = (Node) actionEvent.getSource();
@@ -31,62 +41,132 @@ public class Controller_MainPanel {
     public void OnClickSendMoney(ActionEvent actionEvent) {
     }
 
-    public void OnClickChangeFirstName(ActionEvent actionEvent) {
+    public String DialogBoxQuestion(){
 
-        //TODO:Upakować w funkcje:
-        TextInputDialog dialog = new TextInputDialog("Imie");
+        TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Zmiana danych osobowych");
-        dialog.setHeaderText("Zmiana danych wymaga późniejszej weryfikacji.");
-        dialog.setContentText("Prosimy o wprowadzenie nowego imienia");
+        dialog.setHeaderText("Wprowadzone zmiany wymagają późniejszej autoryzacji.");
+        dialog.setContentText("Prosimy o uzupełnienie pola:");
 
         Optional<String> result = dialog.showAndWait();
-
         result.ifPresent(name->System.out.println("Your name: " + name));
 
+        String name1= result.get();
 
-        }
+        return name1;
+    }
 
+    public void OnClickChangeFirstName(ActionEvent actionEvent) {
+
+        clientNameLabel.setText(DialogBoxQuestion());
+
+        Session session = Main.getSession();
+        session.beginTransaction();
+
+        String receivedClientID = session.createQuery("select accountOwnerId from AccountEntity where accountNum='"+Controller_basic.logged_account_num+"'")
+                .getSingleResult().toString();
+//TODO;
+        //session.createQuery("Insert into PersonEntity Open  firstName where personID='"+receivedClientID+"'")
+        //        .getSingleResult().toString();
+
+
+
+
+    }
 
 
     public void OnClickChangeSecondName(ActionEvent actionEvent) {
 
-        TextInputDialog dialog = new TextInputDialog(" Nazwisko");
-        dialog.setTitle("Zmiana danych osobowych");
-        dialog.setHeaderText("Zmiana danych wymaga późniejszej weryfikacji.");
-        dialog.setContentText("Prosimy o wprowadzenie nowego nazwiska:");
+        clientSurnameLabel.setText(DialogBoxQuestion());
 
-        Optional<String> result = dialog.showAndWait();
-
-        result.ifPresent(surname->System.out.println("Your surname: " + surname));
 
     }
 
     public void OnClickChangeEmail(ActionEvent actionEvent) {
+
+        clientEmailLabel.setText(DialogBoxQuestion());
     }
 
     public void OnClickChangeTelephoneNum(ActionEvent actionEvent) {
 
+        clientTelephoneLabel.setText(DialogBoxQuestion());
 
-        TextInputDialog dialog = new TextInputDialog("123456789");
-        dialog.setTitle("Zmiana danych osobowych");
-        dialog.setHeaderText("Zmiana danych wymaga późniejszej weryfikacji.");
-        dialog.setContentText("Prosimy o wprowadzenie nowego numeru telefonu:");
-
-        Optional<String> result = dialog.showAndWait();
-
-        result.ifPresent(name->System.out.println("Your tel. is: " + name));
     }
 
     public void OnClickChangeAge(ActionEvent actionEvent) {
 
+        clientAgeLabel.setText(DialogBoxQuestion());
 
-        TextInputDialog dialog = new TextInputDialog("sweet sixteen");
-        dialog.setTitle("Zmiana danych osobowych");
-        dialog.setHeaderText("Zmiana danych wymaga późniejszej weryfikacji.");
-        dialog.setContentText("Prosimy o wprowadzenie swojego wieku");
+    }
 
-        Optional<String> result = dialog.showAndWait();
+    public void OnSelectSaldo(Event event) {
 
-        result.ifPresent(name->System.out.println("Your age is " + name));
+        Session session = Main.getSession();
+        session.beginTransaction();
+
+        String moneyData = session.createQuery("select moneyValue from AccountEntity where accountNum='"+Controller_basic.logged_account_num+"'")
+                .getSingleResult().toString();
+
+        saldoValueLabel.setText(moneyData+" zł");
+
+
+    }
+
+    public void OnSelectHistory(Event event) {
+
+        Session session = Main.getSession();
+        session.beginTransaction();
+
+        List<Group> groupList = session.createQuery("FROM PersonEntity ").list();
+
+        historyTableView.setItems(FXCollections.observableList(groupList));
+        historyTableView.getSelectionModel().select(0);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void OnSelectTransactions(Event event) {
+
+
+    }
+
+    public void OnSelectOptions(Event event) {
+
+        Session session = Main.getSession();
+        session.beginTransaction();
+
+        String receivedClientID = session.createQuery("select accountOwnerId from AccountEntity where accountNum='"+Controller_basic.logged_account_num+"'")
+                .getSingleResult().toString();
+
+        try {
+            String storedClientName = session.createQuery("select firstName from PersonEntity where personID='"+receivedClientID+"'")
+                    .getSingleResult().toString();
+            clientNameLabel.setText(storedClientName);
+
+
+            String storedClientSurname = session.createQuery("select secondName from PersonEntity where personID='"+receivedClientID+"'")
+                    .getSingleResult().toString();
+            clientSurnameLabel.setText(storedClientSurname);
+
+            String storedClientEmail = session.createQuery("select emailAdress from PersonEntity where personID='"+receivedClientID+"'")
+                    .getSingleResult().toString();
+            clientEmailLabel.setText(storedClientEmail);
+
+            String storedClientAge = session.createQuery("select clientAge from PersonEntity where personID='"+receivedClientID+"'")
+                    .getSingleResult().toString();
+            clientAgeLabel.setText(storedClientAge);
+
+            String storedClientTelephoneNum = session.createQuery("select telNumber from PersonEntity where personID='"+receivedClientID+"'")
+                    .getSingleResult().toString();
+            clientTelephoneLabel.setText(storedClientTelephoneNum);
+
+        } catch (RuntimeException e)
+        {
+            e.printStackTrace();
+        }
+        session.getTransaction().commit();
+
+        session.close();
+
     }
 }

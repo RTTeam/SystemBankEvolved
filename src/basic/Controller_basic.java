@@ -9,14 +9,17 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.Session;
+import panel.PersonEntity;
+
 import java.io.IOException;
 import java.security.MessageDigest;
+import java.util.Random;
 
 public class Controller_basic {
 
     public TextField login;
     public PasswordField password;
-    public static String logged_account_num;
+    public static  String logged_account_num;
 
 
     private String received_account_num;
@@ -35,7 +38,7 @@ public class Controller_basic {
 
             } else {
 
-                received_account_num = sha256(login.getText());
+                received_account_num = login.getText();
                 received_password = sha256(password.getText());
                 Session session = Main.getSession();
                 AccountEntity account = new AccountEntity();
@@ -54,6 +57,7 @@ public class Controller_basic {
                     stored_password = words;
 
                     Long stored_id = account.getId();
+                    session.getTransaction().commit();
                     System.out.println("Id zalogowanego klienta: "+stored_id);
 
                     System.out.println(account.getAccountNum());
@@ -75,7 +79,9 @@ public class Controller_basic {
 
                 if (received_account_num.equals(stored_acc_num) && received_password.equals(stored_password)){
 
-                            logged_account_num = stored_acc_num;
+                            logged_account_num = received_account_num;
+
+
 
                         try{
                                     Parent root1 = FXMLLoader.load(getClass().getResource("../resources/MainPanel.fxml"));
@@ -132,15 +138,27 @@ public class Controller_basic {
         Session session = Main.getSession();
         session.beginTransaction();
 
-        for (int i=0; i<100; i++) {
+        for (int i=1; i<21; i++) {
             AccountEntity account = new AccountEntity();
             String testuser = new String("User"+i);
-            account.setAccountNum(sha256(testuser));
+            account.setAccountNum(testuser);
             String testassword = new String("test"+i);
             account.setAccountPass(sha256(testassword));
-            account.setFirstName("Klient "+i);
-            account.setsSecondName("Nazwisko "+i);
+            String testID = "c2d"+i+"4p";
+            account.setMoneyValue((int )(Math.random() * 50000 + 100));
+            account.setAccountOwnerId(testID);
+            account.setAccountType("PLN");
             session.save(account);
+            PersonEntity person = new PersonEntity();
+            person.setFirstName("Marian"+i);
+            person.setSecondName("Kowalski"+i);
+            person.setEmailAdress("Marian"+i+"@Kowalski.com");
+            person.setPersonID(testID);
+            person.setTelNumber((int )(Math.random() * 999999999 + 100000000));
+            person.setClientAge((int )(Math.random() * 80 + 18));
+            session.save(person);
+
+
         }
         session.getTransaction().commit();
         session.close();

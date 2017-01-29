@@ -62,7 +62,7 @@
          <center>
             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
-                <Tab text="Saldo konta">
+                <Tab onSelectionChanged="#OnSelectSaldo" text="Saldo konta">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -71,7 +71,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="326.0" layoutY="43.0" text="&lt;saldo&gt;">
+                              <Label fx:id="saldoValueLabel" layoutX="326.0" layoutY="43.0" text="&lt;saldo&gt;">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -88,11 +88,11 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab text="Historia">
+                  <Tab onSelectionChanged="#OnSelectHistory" text="Historia">
                      <content>
                         <BorderPane prefHeight="200.0" prefWidth="200.0">
                            <center>
-                              <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                              <TableView fx:id="historyTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                 <columns>
                                   <TableColumn prefWidth="75.0" resizable="false" text="ID" />
                                   <TableColumn prefWidth="110.0" resizable="false" text="Nadawca" />
@@ -108,7 +108,7 @@
                         </BorderPane>
                      </content>
                   </Tab>
-                  <Tab text="Transakcje">
+                  <Tab onSelectionChanged="#OnSelectTransactions" text="Transakcje">
                      <content>
                         <BorderPane prefHeight="200.0" prefWidth="200.0">
                            <center>
@@ -189,7 +189,7 @@
                         </BorderPane>
                      </content>
                   </Tab>
-                  <Tab text="Panel Sterowania">
+                  <Tab onSelectionChanged="#OnSelectOptions" text="Panel Sterowania">
                      <content>
                         <BorderPane prefHeight="200.0" prefWidth="200.0">
                            <top>
@@ -202,46 +202,46 @@
                            <center>
                               <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <VBox prefHeight="487.0" prefWidth="277.0">
+                                    <VBox prefHeight="487.0" prefWidth="256.0">
                                        <children>
                                           <Label text="Imię:">
                                              <font>
-                                                <Font size="20.0" />
+                                                <Font size="15.0" />
                                              </font>
                                              <VBox.margin>
-                                                <Insets left="40.0" top="10.0" />
+                                                <Insets left="40.0" top="15.0" />
                                              </VBox.margin>
                                           </Label>
                                           <Label text="Naziwsko:">
                                              <font>
-                                                <Font size="20.0" />
+                                                <Font size="15.0" />
                                              </font>
                                              <VBox.margin>
-                                                <Insets left="40.0" top="10.0" />
+                                                <Insets left="40.0" top="15.0" />
                                              </VBox.margin>
                                           </Label>
                                           <Label text="Adres E-mail:">
                                              <font>
-                                                <Font size="20.0" />
+                                                <Font size="15.0" />
                                              </font>
                                              <VBox.margin>
-                                                <Insets left="40.0" top="10.0" />
+                                                <Insets left="40.0" top="15.0" />
                                              </VBox.margin>
                                           </Label>
                                           <Label text="Numer telefonu:">
                                              <font>
-                                                <Font size="20.0" />
+                                                <Font size="15.0" />
                                              </font>
                                              <VBox.margin>
-                                                <Insets left="40.0" top="10.0" />
+                                                <Insets left="40.0" top="15.0" />
                                              </VBox.margin>
                                           </Label>
                                           <Label text="Wiek:">
                                              <font>
-                                                <Font size="20.0" />
+                                                <Font size="15.0" />
                                              </font>
                                              <VBox.margin>
-                                                <Insets left="40.0" top="10.0" />
+                                                <Insets left="40.0" top="15.0" />
                                              </VBox.margin>
                                           </Label>
                                        </children>
@@ -253,71 +253,71 @@
                                        <children>
                                           <Label fx:id="clientNameLabel" text="&lt;name&gt;">
                                              <font>
-                                                <Font size="20.0" />
+                                                <Font size="15.0" />
                                              </font>
                                              <VBox.margin>
-                                                <Insets left="20.0" top="10.0" />
+                                                <Insets left="20.0" top="15.0" />
                                              </VBox.margin>
                                           </Label>
                                           <Label fx:id="clientSurnameLabel" text="&lt;surname">
                                              <font>
-                                                <Font size="20.0" />
+                                                <Font size="15.0" />
                                              </font>
                                              <VBox.margin>
-                                                <Insets left="20.0" top="10.0" />
+                                                <Insets left="20.0" top="15.0" />
                                              </VBox.margin>
                                           </Label>
                                           <Label fx:id="clientEmailLabel" text="&lt;e-mail&gt;">
                                              <font>
-                                                <Font size="20.0" />
+                                                <Font size="15.0" />
                                              </font>
                                              <VBox.margin>
-                                                <Insets left="20.0" top="10.0" />
+                                                <Insets left="20.0" top="15.0" />
                                              </VBox.margin>
                                           </Label>
                                           <Label fx:id="clientTelephoneLabel" text="&lt;nr telefonu&gt;">
                                              <font>
-                                                <Font size="20.0" />
+                                                <Font size="15.0" />
                                              </font>
                                              <VBox.margin>
-                                                <Insets left="20.0" top="10.0" />
+                                                <Insets left="20.0" top="15.0" />
                                              </VBox.margin>
                                           </Label>
                                           <Label fx:id="clientAgeLabel" text="&lt;wiek&gt;">
                                              <font>
-                                                <Font size="20.0" />
+                                                <Font size="15.0" />
                                              </font>
                                              <VBox.margin>
-                                                <Insets left="20.0" top="10.0" />
+                                                <Insets left="20.0" top="15.0" />
                                              </VBox.margin>
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <VBox prefHeight="487.0" prefWidth="177.0">
+                                    <VBox prefHeight="487.0" prefWidth="180.0">
                                        <children>
                                           <Button mnemonicParsing="false" onAction="#OnClickChangeFirstName" text="Zmień">
                                              <VBox.margin>
-                                                <Insets left="20.0" top="12.0" />
+                                                <Insets left="20.0" top="5.0" />
                                              </VBox.margin>
                                           </Button>
                                           <Button mnemonicParsing="false" onAction="#OnClickChangeSecondName" text="Zmień">
                                              <VBox.margin>
-                                                <Insets left="20.0" top="7.0" />
+                                                <Insets left="20.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
                                           <Button mnemonicParsing="false" onAction="#OnClickChangeEmail" text="Zmień">
                                              <VBox.margin>
-                                                <Insets left="20.0" top="8.0" />
+                                                <Insets left="20.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
                                           <Button mnemonicParsing="false" onAction="#OnClickChangeTelephoneNum" text="Zmień">
                                              <VBox.margin>
-                                                <Insets left="20.0" top="8.0" />
+                                                <Insets left="20.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
                                           <Button mnemonicParsing="false" onAction="#OnClickChangeAge" text="Zmień">
                                              <VBox.margin>
-                                                <Insets left="20.0" top="8.0" />
+                                                <Insets left="20.0" top="10.0" />
                                              </VBox.margin>
                                           </Button>
                                        </children>
