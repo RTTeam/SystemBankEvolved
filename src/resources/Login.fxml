@@ -30,7 +30,7 @@
                       <Menu mnemonicParsing="false" text="Aplikacja">
                         <items>
                           <MenuItem fx:id="closeButton" mnemonicParsing="false" onAction="#CloseButton" text="Zamknij" />
-                              <MenuItem mnemonicParsing="false" text="Restart" />
+                              <MenuItem fx:id="restartButton" mnemonicParsing="false" onAction="#restartButton" text="Restart" />
                         </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Pomoc">

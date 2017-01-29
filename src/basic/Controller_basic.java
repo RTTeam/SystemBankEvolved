@@ -172,4 +172,12 @@ public class Controller_basic {
         created.showAndWait();
 
     }
+
+    public void restartButton(ActionEvent actionEvent) {
+        Main okno_login = new Main();
+        okno_login.okno_login.close();
+        login.clear();
+        password.clear();
+        okno_login.okno_login.show();
+    }
 }
