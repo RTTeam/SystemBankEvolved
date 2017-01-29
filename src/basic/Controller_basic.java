@@ -180,4 +180,30 @@ public class Controller_basic {
         password.clear();
         okno_login.okno_login.show();
     }
+
+    public void ProgramInfo(ActionEvent actionEvent) {
+        try {
+            Parent root2 = FXMLLoader.load(getClass().getResource("../resources/ProgramInfo.fxml"));
+            Stage stage2 = new Stage();
+            stage2.initModality(Modality.APPLICATION_MODAL);
+            stage2.setTitle("O programie");
+            stage2.setScene(new Scene(root2));
+            stage2.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void TechHelp(ActionEvent actionEvent) {
+        try {
+            Parent root3 = FXMLLoader.load(getClass().getResource("../resources/TechHelp.fxml"));
+            Stage stage3 = new Stage();
+            stage3.initModality(Modality.APPLICATION_MODAL);
+            stage3.setTitle("Pomoc techniczna");
+            stage3.setScene(new Scene(root3));
+            stage3.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
