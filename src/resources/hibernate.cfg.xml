@@ -16,5 +16,6 @@
 
         <mapping class="basic.AccountEntity"/>
         <mapping class="panel.PersonEntity"/>
+        <mapping class="panel.TransactionEntity"/>
     </session-factory>
 </hibernate-configuration>

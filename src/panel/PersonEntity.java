@@ -1,8 +1,10 @@
 package panel;
 
+import basic.AccountEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by root on 26.01.17.
@@ -15,9 +17,8 @@ public class PersonEntity {
     public PersonEntity(){
 
     }
-
     @Id
-    @GeneratedValue(generator="increment")
+    @GeneratedValue(generator = "increment")
     @GenericGenerator(name="increment", strategy="increment")
     private Integer id;
 
@@ -36,7 +37,9 @@ public class PersonEntity {
     @Column(name="client_age")
     private Integer clientAge;
 
-
+    @OneToOne
+    @JoinColumn(name = "client_id")
+    private AccountEntity clientId;
 
 
     public String getFirstName() {
@@ -63,7 +66,6 @@ public class PersonEntity {
         this.emailAdress = emailAdress;
     }
 
-
     public Integer getTelNumber() {
         return telNumber;
     }
@@ -86,5 +88,13 @@ public class PersonEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public AccountEntity getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(AccountEntity clientId) {
+        this.clientId = clientId;
     }
 }

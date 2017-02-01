@@ -27,7 +27,6 @@ public class Main extends Application {
 
             ourSessionFactory = configuration.buildSessionFactory();
         } catch (Exception ex) {
-            //throw new ExceptionInInitializerError(ex);
             ex.printStackTrace();
         }
     }

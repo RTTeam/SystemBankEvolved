@@ -88,6 +88,9 @@
                               <Label layoutX="38.0" layoutY="225.0" text="Łączna kwota kredytów:" />
                               <Label fx:id="creditsValueLabel" layoutX="254.0" layoutY="225.0" text="&lt;kwota&gt;" />
                            </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
                         </AnchorPane>
                   </content>
                 </Tab>
@@ -97,11 +100,12 @@
                            <center>
                               <TableView fx:id="historyTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                 <columns>
-                                  <TableColumn prefWidth="75.0" resizable="false" text="ID" />
-                                  <TableColumn prefWidth="110.0" resizable="false" text="Nadawca" />
-                                    <TableColumn prefWidth="101.0" resizable="false" text="Odbiorca" />
-                                    <TableColumn prefWidth="90.0" resizable="false" text="Kwota " />
-                                    <TableColumn prefWidth="156.0" resizable="false" text="Tytuł przelewu" />
+                                  <TableColumn fx:id="senderColumn" editable="false" prefWidth="96.0" resizable="false" text="Nadawca" />
+                                    <TableColumn fx:id="recipientColumn" editable="false" prefWidth="92.0" resizable="false" text="Odbiorca" />
+                                    <TableColumn fx:id="valueColumn" editable="false" prefWidth="100.0" resizable="false" text="Kwota " />
+                                    <TableColumn fx:id="currencyColumn" editable="false" prefWidth="68.0" resizable="false" text="Waluta" />
+                                    <TableColumn fx:id="dateColumn" editable="false" prefWidth="89.0" text="Data" />
+                                    <TableColumn fx:id="timeColumn" editable="false" prefWidth="87.0" text="Godzina" />
                                 </columns>
                                  <BorderPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -119,44 +123,41 @@
                                  <children>
                                     <VBox prefHeight="342.0" prefWidth="272.0">
                                        <children>
-                                          <Label text="Numer konta:">
+                                          <Label text="Numer konta odbiorcy:">
                                              <VBox.margin>
-                                                <Insets left="120.0" top="10.0" />
+                                                <Insets left="100.0" top="10.0" />
                                              </VBox.margin>
                                           </Label>
                                           <Label text="Kwota transakcji:">
-                                             <padding>
-                                                <Insets left="120.0" />
-                                             </padding>
                                              <VBox.margin>
-                                                <Insets top="15.0" />
+                                                <Insets left="100.0" top="15.0" />
                                              </VBox.margin>
                                           </Label>
                                           <Label text="Tytuł przelewu:">
                                              <VBox.margin>
-                                                <Insets left="120.0" top="15.0" />
+                                                <Insets left="100.0" top="15.0" />
                                              </VBox.margin>
                                           </Label>
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="477.0" prefWidth="290.0">
                                        <children>
-                                          <TextField prefHeight="26.0" prefWidth="165.0">
+                                          <TextField fx:id="recipientInputField" prefHeight="26.0" prefWidth="165.0">
                                              <VBox.margin>
                                                 <Insets right="80.0" top="5.0" />
                                              </VBox.margin>
                                           </TextField>
-                                          <TextField>
+                                          <TextField fx:id="sendAmountInputField">
                                              <VBox.margin>
                                                 <Insets right="80.0" top="5.0" />
                                              </VBox.margin>
                                           </TextField>
-                                          <TextField>
+                                          <TextArea fx:id="sendHeaderInputField" prefHeight="89.0" prefWidth="202.0">
                                              <VBox.margin>
                                                 <Insets right="80.0" top="5.0" />
                                              </VBox.margin>
-                                          </TextField>
-                                          <Button mnemonicParsing="false" onAction="#OnClickSendMoney" prefHeight="26.0" prefWidth="110.0" text="Wyślij">
+                                          </TextArea>
+                                          <Button mnemonicParsing="false" onAction="#OnClickTransactionSend" prefHeight="26.0" prefWidth="110.0" text="Wyślij">
                                              <VBox.margin>
                                                 <Insets left="80.0" top="10.0" />
                                              </VBox.margin>

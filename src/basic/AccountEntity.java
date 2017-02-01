@@ -1,7 +1,7 @@
 package basic;
 
 import org.hibernate.annotations.GenericGenerator;
-
+import panel.PersonEntity;
 import javax.persistence.*;
 
 /**
@@ -19,7 +19,7 @@ public class AccountEntity {
     @GenericGenerator(name="increment", strategy="increment")
     private Integer id;
 
-    @Column(name="account_num")
+    @Column(name="account_num", nullable = false,unique = true)
     private Integer accountNum;
 
     @Column(name="account_password")
@@ -33,6 +33,10 @@ public class AccountEntity {
 
     @Column(name="acc_exp_date")
     private String accountExpDate;
+
+    @OneToOne(mappedBy = "clientId")
+    @JoinColumn(name = "acc_owner_id")
+    private PersonEntity accountOwnerId;
 
     @Override
     public boolean equals(Object o) {
@@ -50,9 +54,6 @@ public class AccountEntity {
         return id != null ? id.hashCode() : 0;
     }
 
-
-
-
     public String getAccountPass() {
         return accountPass;
     }
@@ -60,8 +61,6 @@ public class AccountEntity {
     public void setAccountPass(String accountPass) {
         this.accountPass = accountPass;
     }
-
-
 
     public String getAccountType() {
         return accountType;
@@ -87,6 +86,14 @@ public class AccountEntity {
         this.moneyValue = moneyValue;
     }
 
+    public Integer getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(Integer accountNum) {
+        this.accountNum = accountNum;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -95,11 +102,11 @@ public class AccountEntity {
         this.id = id;
     }
 
-    public Integer getAccountNum() {
-        return accountNum;
+    public PersonEntity getAccountOwnerId() {
+        return accountOwnerId;
     }
 
-    public void setAccountNum(Integer accountNum) {
-        this.accountNum = accountNum;
+    public void setAccountOwnerId(PersonEntity accountOwnerId) {
+        this.accountOwnerId = accountOwnerId;
     }
 }
