@@ -5,6 +5,8 @@ import basic.AccountEntity;
 import basic.Controller_basic;
 import basic.Main;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -17,9 +19,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.Session;
+
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 /**
@@ -31,10 +37,10 @@ public class Controller_MainPanel {
     public Label clientNameLabel,clientSurnameLabel,clientEmailLabel,clientTelephoneLabel,clientAgeLabel,
                  saldoValueLabel,accTypeLabel,expDateLabel,creditsLabel,creditsValueLabel;
 
-    public TableView historyTableView;
+    public TableView historyTableView,exchangeTable;
     public TextField recipientInputField,sendAmountInputField;
     public TextArea sendHeaderInputField,lastTransactionField,accountDetailsField;
-    public TableColumn senderColumn,recipientColumn,valueColumn,currencyColumn,dateColumn,timeColumn;
+    public TableColumn senderColumn,recipientColumn,valueColumn,currencyColumn,dateColumn,timeColumn,exCurrencyColumn,exValueColumn;
     public String last_transaction;
 
     public void OnClickLogout(ActionEvent actionEvent) {
@@ -52,6 +58,13 @@ public class Controller_MainPanel {
         Optional<String> result = dialog.showAndWait();
         String name1= result.get();
         return name1;
+    }
+    public void SetErrorDialog(){
+        Alert fail= new Alert(Alert.AlertType.ERROR);
+        fail.initModality(Modality.WINDOW_MODAL);
+        fail.setHeaderText("Transakcja nieudana.");
+        fail.setContentText("Wystąpił nieznany błąd.");
+        fail.showAndWait();
     }
 
     public void OnClickChangeFirstName(ActionEvent actionEvent) {
@@ -110,9 +123,6 @@ public class Controller_MainPanel {
         creditsValueLabel.setText(Integer.toString((int )(Math.random() * 12000 + 200))+" "+currType);
         session.getTransaction().commit();
         session.close();
-
-        accountDetailsField.setText("Zawartość chwilowo niedostępna.\nW przypadku dodatkowych pytań zachęcamy do kontaktu z Państwa opiekunem handlowym.");
-
     }
 
     public void OnSelectHistory(Event event) {
@@ -156,13 +166,11 @@ public class Controller_MainPanel {
         clientTelephoneLabel.setText(String.valueOf(person.getTelNumber()));
         session.getTransaction().commit();
         session.close();
-
     }
 
     public void OnSelectTransactions(Event event) {
         lastTransactionField.setText(last_transaction);
     }
-
     private boolean CheckTransactionAvailability(int recipientNum,int sendAmount){
 
         Session session = Main.getSession();
@@ -225,28 +233,31 @@ public class Controller_MainPanel {
         session.save(transaction);
         }
         else{
-            Alert fail= new Alert(Alert.AlertType.ERROR);
-            fail.initModality(Modality.WINDOW_MODAL);
-            fail.setHeaderText("Transakcja nieudana.");
-            fail.setContentText("Wystąpił nieznany błąd.");
-            fail.showAndWait();
+            SetErrorDialog();
         }
         session.getTransaction().commit();
         session.close();
+    }
+    public void OnSelectCredits(Event event) {
+
+        List<Double> intValues = Arrays.asList(4.0014, 4.2985, 4.0192, 4.9959, 0.4842);
+        List<String> stringValues = Arrays.asList("USD", "EUR", "CHF", "GBP", "NOK");
+        for (int i = 0; i < intValues.size() && i < stringValues.size(); i++) {
+            exchangeTable.getItems().add(i);
+        }
+        
     }
 
     public String GetCurrentDate(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDateTime now = LocalDateTime.now();
-        String currentDate = dtf.format(now);
-        return currentDate;
+        return dtf.format(now);
     }
 
     public String GetCurrentTime(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        String currentDate = dtf.format(now);
-        return currentDate;
+        return dtf.format(now);
     }
 
     public void OnClickTransactionSend(ActionEvent actionEvent) {
@@ -264,16 +275,10 @@ public class Controller_MainPanel {
             fail.showAndWait();}
         }
         else{
-            Alert fail= new Alert(Alert.AlertType.ERROR);
-            fail.initModality(Modality.WINDOW_MODAL);
-            fail.setHeaderText("Transakcja nieudana.");
-            fail.setContentText("Wystąpił nieznany błąd.");
-            fail.showAndWait();
+            SetErrorDialog();
         }
 
     }
-
-
     public void OnClickTechHelp(ActionEvent actionEvent) {
         try {
             Parent techRoot = FXMLLoader.load(getClass().getResource("../resources/TechHelp.fxml"));
