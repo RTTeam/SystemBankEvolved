@@ -15,7 +15,6 @@ public class TransactionEntity {
         public TransactionEntity(){
 
         }
-
         @Id
         @GeneratedValue(generator = "increment")
         @GenericGenerator(name="increment", strategy="increment")

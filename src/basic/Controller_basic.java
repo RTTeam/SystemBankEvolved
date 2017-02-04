@@ -11,9 +11,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import panel.PersonEntity;
-import sun.rmi.runtime.Log;
-
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.security.MessageDigest;
 

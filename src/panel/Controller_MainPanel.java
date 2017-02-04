@@ -4,42 +4,24 @@ package panel;
 import basic.AccountEntity;
 import basic.Controller_basic;
 import basic.Main;
-import com.sun.istack.internal.NotNull;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.hibernate.Interceptor;
-import org.hibernate.PersistentObjectException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
-
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 /**
  * Created by root on 25.01.17.
  */
@@ -51,7 +33,7 @@ public class Controller_MainPanel {
 
     public TableView historyTableView;
     public TextField recipientInputField,sendAmountInputField;
-    public TextArea sendHeaderInputField,lastTransactionField;
+    public TextArea sendHeaderInputField,lastTransactionField,accountDetailsField;
     public TableColumn senderColumn,recipientColumn,valueColumn,currencyColumn,dateColumn,timeColumn;
     public String last_transaction;
 
@@ -59,12 +41,10 @@ public class Controller_MainPanel {
         final Node source = (Node) actionEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-        Platform.exit();
-        System.exit(0);
+        Platform.exit();System.exit(0);
     }
 
     public String DialogBoxQuestion(){
-
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Zmiana danych osobowych");
         dialog.setHeaderText("Wprowadzone zmiany wymagają późniejszej autoryzacji.");
@@ -82,9 +62,7 @@ public class Controller_MainPanel {
     public void updateData(String naming, int parameter){
         Session session = Main.getSession();
         session.beginTransaction();
-
         PersonEntity person = (PersonEntity)session.get(PersonEntity.class,Controller_basic.logged_account_id);
-
         switch (parameter){
             case 1: person.setFirstName(naming); break;
             case 2: person.setSecondName(naming); break;
@@ -98,32 +76,24 @@ public class Controller_MainPanel {
         session.close();
         }
 
-
     public void OnClickChangeSecondName(ActionEvent actionEvent) {
-
         clientSurnameLabel.setText(DialogBoxQuestion());
         updateData(clientSurnameLabel.getText(),2);
     }
 
     public void OnClickChangeEmail(ActionEvent actionEvent) {
-
         clientEmailLabel.setText(DialogBoxQuestion());
         updateData(clientEmailLabel.getText(),3);
     }
 
     public void OnClickChangeTelephoneNum(ActionEvent actionEvent) {
-
         clientTelephoneLabel.setText(DialogBoxQuestion());
         updateData(clientTelephoneLabel.getText(),4);
-
-
     }
 
     public void OnClickChangeAge(ActionEvent actionEvent) {
-
         clientAgeLabel.setText(DialogBoxQuestion());
         updateData(clientAgeLabel.getText(),5);
-
     }
 
     public void OnSelectSaldo(Event event) {
@@ -140,6 +110,8 @@ public class Controller_MainPanel {
         creditsValueLabel.setText(Integer.toString((int )(Math.random() * 12000 + 200))+" "+currType);
         session.getTransaction().commit();
         session.close();
+
+        accountDetailsField.setText("Zawartość chwilowo niedostępna.\nW przypadku dodatkowych pytań zachęcamy do kontaktu z Państwa opiekunem handlowym.");
 
     }
 
@@ -176,7 +148,6 @@ public class Controller_MainPanel {
 
         Session session = Main.getSession();
         session.beginTransaction();
-
         PersonEntity person = (PersonEntity)session.get(PersonEntity.class,Controller_basic.logged_account_id);
         clientNameLabel.setText(person.getFirstName());
         clientSurnameLabel.setText(person.getSecondName());
@@ -189,10 +160,7 @@ public class Controller_MainPanel {
     }
 
     public void OnSelectTransactions(Event event) {
-
         lastTransactionField.setText(last_transaction);
-
-
     }
 
     private boolean CheckTransactionAvailability(int recipientNum,int sendAmount){
@@ -234,25 +202,35 @@ public class Controller_MainPanel {
         session.beginTransaction();
 
         AccountEntity senderAcc = (AccountEntity)session.load(AccountEntity.class,Controller_basic.logged_account_id);
-        senderAcc.setMoneyValue(senderAcc.getMoneyValue()-sendAmount);
-        session.save(senderAcc);
         AccountEntity recipientAcc = (AccountEntity)session.load(AccountEntity.class,Controller_basic.GetEntityIdbyAccNum(recipientNum));
-        recipientAcc.setMoneyValue(recipientAcc.getMoneyValue()+sendAmount);
-        session.save(recipientAcc);
-        TransactionEntity transaction = new TransactionEntity();
-        transaction.setSenderAccountNum(senderAcc.getAccountNum());
-        transaction.setRecipientAccountNum(recipientAcc.getAccountNum());
-        transaction.setTransferredMoney(sendAmount);
-        transaction.setTransactionHeader(sendHeader);
-        transaction.setCurrencyType(senderAcc.getAccountType());
-        transaction.setTransferDate(GetCurrentDate());
-        transaction.setTransferTime(GetCurrentTime());
+        if (senderAcc.getAccountNum()!=recipientAcc.getAccountNum()) {
+            senderAcc.setMoneyValue(senderAcc.getMoneyValue() - sendAmount);
+            session.save(senderAcc);
+            recipientAcc.setMoneyValue(recipientAcc.getMoneyValue() + sendAmount);
+            session.save(recipientAcc);
+            TransactionEntity transaction = new TransactionEntity();
+            transaction.setSenderAccountNum(senderAcc.getAccountNum());
+            transaction.setRecipientAccountNum(recipientAcc.getAccountNum());
+            transaction.setTransferredMoney(sendAmount);
+            transaction.setTransactionHeader(sendHeader);
+            transaction.setCurrencyType(senderAcc.getAccountType());
+            transaction.setTransferDate(GetCurrentDate());
+            transaction.setTransferTime(GetCurrentTime());
 
         lastTransactionField.setText("Numer konta odbiorcy : "+recipientAcc.getAccountNum()+
                 "\nKwota transakcji: "+sendAmount+"\nRodzaj waluty: "+recipientAcc.getAccountType()+
                 "\nData transakcji: "+ GetCurrentDate()+" "+GetCurrentTime()+"\nTytuł przelewu: "+sendHeader);
         last_transaction = lastTransactionField.getText();
+
         session.save(transaction);
+        }
+        else{
+            Alert fail= new Alert(Alert.AlertType.ERROR);
+            fail.initModality(Modality.WINDOW_MODAL);
+            fail.setHeaderText("Transakcja nieudana.");
+            fail.setContentText("Wystąpił nieznany błąd.");
+            fail.showAndWait();
+        }
         session.getTransaction().commit();
         session.close();
     }
@@ -278,11 +256,12 @@ public class Controller_MainPanel {
         if(CheckTransactionAvailability(recipientNum,moneyTransferred)){
             SendTransaction(recipientNum,moneyTransferred,sendHeaderInputField.getText());
             GetCurrentDate();
+            if (last_transaction!=null){
             Alert fail= new Alert(Alert.AlertType.INFORMATION);
             fail.initModality(Modality.WINDOW_MODAL);
             fail.setHeaderText("Transakcja udana.");
             fail.setContentText("Kwota zostałą pomyślnie przelana do odbiorcy.");
-            fail.showAndWait();
+            fail.showAndWait();}
         }
         else{
             Alert fail= new Alert(Alert.AlertType.ERROR);
