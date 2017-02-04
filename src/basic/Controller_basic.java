@@ -22,6 +22,7 @@ public class Controller_basic {
     public TextField login;
     public PasswordField password;
     public static Integer logged_account_id;
+    public MenuItem developButton,closeButton,programInfo,techHelp;
 
     public static String sha256(String base) {
         try{
@@ -86,7 +87,9 @@ public class Controller_basic {
             }
             else if (LoginUser()){
                     try{
-                        Parent root1 = FXMLLoader.load(getClass().getResource("../resources/MainPanel.fxml"));
+
+                        Parent panelRoot = FXMLLoader.load(getClass().getResource("../resources/MainPanel.fxml"));
+                        panelRoot.setId("main-panel");
                         Stage panelStage = new Stage();
 
                         final Node source = (Node) actionEvent.getSource();
@@ -95,7 +98,7 @@ public class Controller_basic {
 
                         panelStage.initModality(Modality.WINDOW_MODAL);
                         panelStage.setTitle("KuBank");
-                        panelStage.setScene(new Scene(root1));
+                        panelStage.setScene(new Scene(panelRoot));
                         panelStage.getScene().getStylesheets().add(Controller_basic.class.getResource("style.css").toExternalForm());
                         panelStage.setResizable(false);
                         panelStage.show();
@@ -121,9 +124,13 @@ public class Controller_basic {
         CreateTestUsers();
         Alert created= new Alert(Alert.AlertType.INFORMATION);
         created.initModality(Modality.WINDOW_MODAL);
-        created.setHeaderText("Dodano 20 kont.");
-        created.setContentText("Zasada: 1001,1002,1003... / test1,test2,test3... Enjoy.");
+        created.setTitle("Utworzenie kont testowych");
+        created.setHeaderText("Dodano 20 kont w celu testowania działania aplikacji.");
+        created.setContentText("Zasada: 1001,1002,1003... / test1,test2,test3... Enjoy.\nPrzykład: 1001/test1");
         created.showAndWait();
+        developButton.setText("Niedostępny");
+        developButton.setDisable(true);
+
     }
 
     public void CreateTestUsers(){

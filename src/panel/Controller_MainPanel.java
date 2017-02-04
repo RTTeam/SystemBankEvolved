@@ -9,10 +9,15 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.Interceptor;
@@ -26,6 +31,8 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -44,9 +51,8 @@ public class Controller_MainPanel {
 
     public TableView historyTableView;
     public TextField recipientInputField,sendAmountInputField;
-    public TextArea sendHeaderInputField;
+    public TextArea sendHeaderInputField,lastTransactionField;
     public TableColumn senderColumn,recipientColumn,valueColumn,currencyColumn,dateColumn,timeColumn;
-
 
     public void OnClickLogout(ActionEvent actionEvent) {
         final Node source = (Node) actionEvent.getSource();
@@ -128,8 +134,9 @@ public class Controller_MainPanel {
         saldoValueLabel.setText(account.getMoneyValue()+" zł");
         accTypeLabel.setText(account.getAccountType());
         expDateLabel.setText(account.getAccountExpDate());
-        creditsLabel.setText(Integer.toString((int )(Math.random() * 12 + 1)));
-        creditsValueLabel.setText(Integer.toString((int )(Math.random() * 12000 + 200)));
+        creditsLabel.setText(Integer.toString((int )(Math.random() * 3 + 1)));
+        String currType = account.getAccountType();
+        creditsValueLabel.setText(Integer.toString((int )(Math.random() * 12000 + 200))+" "+currType);
         session.getTransaction().commit();
         session.close();
 
@@ -234,9 +241,15 @@ public class Controller_MainPanel {
         transaction.setRecipientAccountNum(recipientAcc.getAccountNum());
         transaction.setTransferredMoney(sendAmount);
         transaction.setTransactionHeader(sendHeader);
-        transaction.setCurrencyType("PLN");
+        transaction.setCurrencyType(senderAcc.getAccountType());
         transaction.setTransferDate(GetCurrentDate());
         transaction.setTransferTime(GetCurrentTime());
+
+        lastTransactionField.setText("Odbiorca przelewu : "+recipientAcc.getAccountNum()+
+                "\nKwota transakcji: "+sendAmount+"\nRodzaj waluty: "+recipientAcc.getAccountType()+
+                "\nData transakcji: "+ GetCurrentDate()+" "+GetCurrentTime()+"\nTytuł przelewu: "+sendHeader);
+
+
         session.save(transaction);
         session.getTransaction().commit();
         session.close();
@@ -277,5 +290,37 @@ public class Controller_MainPanel {
             fail.showAndWait();
         }
 
+    }
+
+
+    public void OnClickTechHelp(ActionEvent actionEvent) {
+        try {
+            Parent techRoot = FXMLLoader.load(getClass().getResource("../resources/TechHelp.fxml"));
+            Stage techstage = new Stage();
+            techstage.initModality(Modality.APPLICATION_MODAL);
+            techstage.setTitle("Pomoc techniczna");
+            techstage.setScene(new Scene(techRoot));
+            techstage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void OnClickProgramInfo(ActionEvent actionEvent) {
+        try {
+            Parent root2 = FXMLLoader.load(getClass().getResource("../resources/ProgramInfo.fxml"));
+            Stage stage2 = new Stage();
+            stage2.initModality(Modality.APPLICATION_MODAL);
+            stage2.setTitle("O programie");
+            stage2.setScene(new Scene(root2));
+            stage2.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void OnClickClosePanel(ActionEvent actionEvent) {
+        Platform.exit();
+        System.exit(0);
     }
 }
