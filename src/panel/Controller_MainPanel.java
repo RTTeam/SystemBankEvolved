@@ -53,6 +53,7 @@ public class Controller_MainPanel {
     public TextField recipientInputField,sendAmountInputField;
     public TextArea sendHeaderInputField,lastTransactionField;
     public TableColumn senderColumn,recipientColumn,valueColumn,currencyColumn,dateColumn,timeColumn;
+    public String last_transaction;
 
     public void OnClickLogout(ActionEvent actionEvent) {
         final Node source = (Node) actionEvent.getSource();
@@ -189,6 +190,8 @@ public class Controller_MainPanel {
 
     public void OnSelectTransactions(Event event) {
 
+        lastTransactionField.setText(last_transaction);
+
 
     }
 
@@ -245,11 +248,10 @@ public class Controller_MainPanel {
         transaction.setTransferDate(GetCurrentDate());
         transaction.setTransferTime(GetCurrentTime());
 
-        lastTransactionField.setText("Odbiorca przelewu : "+recipientAcc.getAccountNum()+
+        lastTransactionField.setText("Numer konta odbiorcy : "+recipientAcc.getAccountNum()+
                 "\nKwota transakcji: "+sendAmount+"\nRodzaj waluty: "+recipientAcc.getAccountType()+
                 "\nData transakcji: "+ GetCurrentDate()+" "+GetCurrentTime()+"\nTytuł przelewu: "+sendHeader);
-
-
+        last_transaction = lastTransactionField.getText();
         session.save(transaction);
         session.getTransaction().commit();
         session.close();
