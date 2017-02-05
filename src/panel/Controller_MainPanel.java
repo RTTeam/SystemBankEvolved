@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -239,12 +240,6 @@ public class Controller_MainPanel {
         session.close();
     }
     public void OnSelectCredits(Event event) {
-
-        List<Double> intValues = Arrays.asList(4.0014, 4.2985, 4.0192, 4.9959, 0.4842);
-        List<String> stringValues = Arrays.asList("USD", "EUR", "CHF", "GBP", "NOK");
-        for (int i = 0; i < intValues.size() && i < stringValues.size(); i++) {
-            exchangeTable.getItems().add(i);
-        }
         
     }
 

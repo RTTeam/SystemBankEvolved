@@ -86,7 +86,7 @@
                               <Label layoutX="38.0" layoutY="186.0" text="Ilość zaciągniętych kredytów:" />
                               <Label fx:id="creditsLabel" layoutX="254.0" layoutY="186.0" text="&lt;ilość&gt;" />
                               <Label layoutX="38.0" layoutY="267.0" text="Szczegóły:" />
-                              <TextArea fx:id="accountDetailsField" layoutX="34.0" layoutY="283.0" prefHeight="229.0" prefWidth="479.0" wrapText="true" />
+                              <TextArea fx:id="accountDetailsField" editable="false" layoutX="34.0" layoutY="283.0" prefHeight="229.0" prefWidth="479.0" wrapText="true" />
                               <Label layoutX="38.0" layoutY="225.0" text="Łączna kwota kredytów:" />
                               <Label fx:id="creditsValueLabel" layoutX="254.0" layoutY="225.0" text="&lt;kwota&gt;" />
                               <ImageView fitHeight="127.0" fitWidth="142.0" layoutX="368.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
@@ -355,8 +355,8 @@
                            <children>
                               <TableView fx:id="exchangeTable" layoutX="172.0" layoutY="327.0" prefHeight="149.0" prefWidth="200.0">
                                 <columns>
-                                  <TableColumn fx:id="exCurrencyColumn" prefWidth="76.0" text="Waluta" />
-                                  <TableColumn fx:id="exValueColumn" prefWidth="123.0" text="Wartość" />
+                                  <TableColumn fx:id="exCurrencyColumn" prefWidth="76.0" resizable="false" text="Waluta" />
+                                  <TableColumn fx:id="exValueColumn" prefWidth="123.0" resizable="false" text="Wartość" />
                                 </columns>
                               </TableView>
                               <Label layoutX="172.0" layoutY="311.0" text="Kursy walut:" />
